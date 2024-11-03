@@ -1,10 +1,15 @@
 import "./global.sass";
+import "bootstrap/scss/bootstrap.scss";
 
 import { FC } from "react";
 
+import Layout from "./components/layout";
+
 const App: FC = () => {
   return (
-    <h1>Hello, World!!!</h1>
+    <Layout>
+      Main
+    </Layout>
   );
 };
 
