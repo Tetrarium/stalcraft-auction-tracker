@@ -1,8 +1,6 @@
 import { FC } from "react";
 import { Container, Image, Nav, Navbar } from "react-bootstrap";
 
-// import s from "./header.module.sass";
-
 const Header: FC = () => {
   return (
     <Navbar className="navbar-dark bg-dark" expand="lg">
