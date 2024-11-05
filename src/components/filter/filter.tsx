@@ -7,7 +7,7 @@ import FSelect from "./f-select";
 
 const Filter = () => {
   return (
-    <Form className="pt-5">
+    <Form className="py-4">
       <Row>
         <FSelect
           className="col-md-3"

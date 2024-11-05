@@ -3,7 +3,7 @@ import { Container, Image, Nav, Navbar } from "react-bootstrap";
 
 const Header: FC = () => {
   return (
-    <Navbar className="navbar-dark bg-dark" expand="lg">
+    <Navbar className="navbar-dark bg-dark py-1" expand="lg">
       <Container>
         <Navbar.Brand href="/">
           <Image src="images/cube_logo_purple.png" width={40} />
