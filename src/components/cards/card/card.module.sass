@@ -1,0 +1,97 @@
+.card
+  display: flex
+  flex-direction: column
+  border-radius: 1em
+  margin: 1em
+  max-width: 25rem
+  min-width: 20rem
+  min-height: 35rem
+  flex: 0 0 auto
+  overflow: hidden
+
+  &__item
+    padding: 1em
+
+.header
+  display: flex
+  align-items: center
+  margin-bottom: 1em
+
+.icon
+  width: 60px
+  height: 60px
+  margin-right: 1em
+
+.title
+  flex-grow: 1
+  text-align: right
+  margin-right: 1em
+
+.info
+  border-bottom: 1px solid #444
+  padding: 0.5em 0
+  &:last-child
+    border-bottom: none
+  &__item
+    display: flex
+    justify-content: space-between
+
+.label
+  &_gray
+    color: gray
+
+.value
+  &_buff
+    color: rgb(81, 224, 81)
+  &_buffBonus
+    color: deepskyblue
+
+.common
+  color: white
+.uncommon
+  color: lightgreen
+.special
+  color: lightskyblue
+.rare
+  color: rgb(255, 96, 242)
+.exceptional
+  color: lightcoral
+.legendary
+  color: orange
+
+.price
+  margin-top: auto
+  background-color: rgb(42, 47, 53)
+
+  &__inner
+    display: flex
+    flex-direction: column
+    gap: 0.5em
+
+  &__item
+    margin: 0.5em 0
+    display: flex
+    justify-content: space-between
+
+  &__value
+    &_cost
+      color: red
+      font-weight: bold
+    &_target
+      color: white
+      font-weight: bold
+    &_profit
+      color: lime
+      font-weight: bold
+
+.historyBtn
+  background-color: transparent
+  border: none
+  padding: 0
+  margin: 0
+  color: gray
+  font: inherit
+  cursor: pointer
+  transition: color .2s linear
+  &:hover
+    color: white
