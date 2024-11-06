@@ -8,8 +8,13 @@ import Card from "./card/card";
 import s from "./cards.module.sass";
 
 const containerClass = classNames(
-  "d-flex flex-row m-1 p-2",
+  "py-1 px-4",
   s.cards
+);
+
+const innerClass = classNames(
+  "d-flex flex-row",
+  s.inner
 );
 
 /** Временная функция */
@@ -46,9 +51,13 @@ const Cards = () => {
   return (
     <Container
       className={containerClass}
-      ref={containerRef}
     >
-      {lots.map(lot => <Card key={lot.uniqueId} lot={lot} />)}
+      <div
+        ref={containerRef}
+        className={innerClass}
+      >
+        {lots.map(lot => <Card key={lot.uniqueId} lot={lot} />)}
+      </div>
     </Container>
   );
 };
