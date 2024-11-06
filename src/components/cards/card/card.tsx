@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 
 import ClockIcon from "@/components/svg-icons/clock-icon";
 import { ICard } from "@/types/card";
@@ -9,9 +9,23 @@ import { capitalize, formatPrice, getRarity } from "./utils";
 
 interface CardProps {
   lot: ICard;
+  index: number;
 }
 
-const Card: FC<CardProps> = ({ lot }) => {
+const Card: FC<CardProps> = ({ lot, index }) => {
+  const [isNew, setIsNew] = useState(index === 0);
+
+  useEffect(() => {
+    let timerId: number;
+    if (isNew) {
+      timerId = setInterval(() => setIsNew(false), 10);
+    }
+
+    return () => {
+      clearInterval(timerId);
+    };
+  }, []);
+
   const {
     uniqueId,
     itemId,
@@ -31,8 +45,12 @@ const Card: FC<CardProps> = ({ lot }) => {
   const { rarity, percentQlt } = getRarity(qlt);
 
   const cardClass = classNames(
-    'text-bg-dark fade-in',
-    s.card
+    'text-bg-dark ',
+    s.card,
+    {
+      [s.card_new]: isNew,
+      [s.card_amature]: !isNew,
+    }
   );
 
   const titleClass = classNames(
@@ -45,6 +63,8 @@ const Card: FC<CardProps> = ({ lot }) => {
     s[rarity],
   );
 
+  const imgUrl = `/images/${itemId.toLowerCase()}.png`;
+
   return (
     <div
       className={cardClass}
@@ -54,7 +74,7 @@ const Card: FC<CardProps> = ({ lot }) => {
         <div className={s.header}>
           <img
             className={s.icon}
-            src={`images/${itemId.toLowerCase()}.png`}
+            src={imgUrl}
             alt={itemId}
           />
           <h5 className={titleClass}>{title}</h5>
