@@ -1,22 +1,46 @@
+import { useState } from "react";
 import { Button, Form, Row } from "react-bootstrap";
+
+import { useGetInitDataQuery } from "@/services/lots";
 
 import RecycleIcon from "../svg-icons/recycle-icon";
 import Trash3Icon from "../svg-icons/trash3-icon";
 import FInput from "./f-input";
 import FSelect from "./f-select";
+import { getFilterSelectItems } from "./utils";
+
+const initialFilter = {
+  name: '',
+  rarity: '',
+  pattern: '',
+};
 
 const Filter = () => {
+  const { data } = useGetInitDataQuery();
+  const [filter, setFilter] = useState(initialFilter);
+
+  const { names, rarities, patterns } = getFilterSelectItems(data);
+
+  const handleChange = (name: string, value: string) => {
+    setFilter({
+      ...filter,
+      [name]: value,
+    });
+  };
+
   return (
     <Form className="pt-4 pb-5">
       <Row>
         <FSelect
           className="col-md-3"
           label="Artifact name"
-          name="status"
+          name="name"
           values={[
             { title: 'All', value: '' },
-            { title: 'Lard', value: 'lard' }
+            ...names,
           ]}
+          value={filter.name}
+          onChange={handleChange}
         />
         <FSelect
           className="col-md-3"
@@ -24,18 +48,21 @@ const Filter = () => {
           name="rarity"
           values={[
             { title: 'All', value: '' },
-            { title: 'Common', value: '' }
+            ...rarities,
           ]}
+          value={filter.rarity}
+          onChange={handleChange}
         />
         <FSelect
           className="col-md-2"
           label="Pattern"
-          name="type"
+          name="pattern"
           values={[
             { title: 'All', value: '' },
-            { title: '0', value: '0' },
-            { title: '1', value: '1' }
+            ...patterns,
           ]}
+          value={filter.pattern}
+          onChange={handleChange}
         />
         <FInput
           className="col-md-2"

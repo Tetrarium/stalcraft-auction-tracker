@@ -1,4 +1,5 @@
 import { ICard } from "@/types/card";
+import { IInitData } from "@/types/initData";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const auctionApi = createApi({
@@ -9,8 +10,14 @@ export const auctionApi = createApi({
   endpoints: (builder) => ({
     getLots: builder.query<ICard[], null>({
       query: () => 'lots',
+    }),
+    getInitData: builder.query<IInitData, void>({
+      query: () => 'init'
     })
   })
 });
 
-export const { useGetLotsQuery } = auctionApi;
+export const {
+  useGetLotsQuery,
+  useGetInitDataQuery
+} = auctionApi;
