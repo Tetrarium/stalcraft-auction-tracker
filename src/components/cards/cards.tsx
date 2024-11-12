@@ -9,7 +9,7 @@ import Card from "./card/card";
 import s from "./cards.module.sass";
 
 const containerClass = classNames(
-  "py-1 px-4",
+  "py-1 px-4 mb-5",
   s.cards
 );
 
