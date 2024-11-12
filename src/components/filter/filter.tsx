@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Button, Form, Row } from "react-bootstrap";
 
 import { useGetInitDataQuery } from "@/services/lots";
@@ -13,7 +13,12 @@ const initialFilter = {
   name: '',
   rarity: '',
   pattern: '',
+  minProfit: '',
+  minProfitPercent: '',
 };
+
+const MIN_PROFIT = 0;
+const MAX_PROFIT = 999_999_999;
 
 const Filter = () => {
   const { data } = useGetInitDataQuery();
@@ -26,6 +31,31 @@ const Filter = () => {
       ...filter,
       [name]: value,
     });
+  };
+
+  const handleChangeMinProfit = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === '') {
+      handleChange('minProfit', '');
+      return;
+    }
+
+    const value = Math.min(Math.max(MIN_PROFIT, +e.target.value), MAX_PROFIT);
+
+    handleChange('minProfit', value.toString());
+  };
+
+  const handleChangeMinProfitPercent = (e: ChangeEvent<HTMLInputElement>) => {
+    const target = e.target;
+    const rawValue = target.value.replace(/[^\d]/g, '');
+
+    if (rawValue === '') {
+      handleChange('minProfitPercent', '');
+      return;
+    }
+
+    const value = Math.min(Math.max(parseInt(rawValue), 0), 10_000_000);
+
+    handleChange('minProfitPercent', value + '%');
   };
 
   return (
@@ -67,17 +97,21 @@ const Filter = () => {
         <FInput
           className="col-md-2"
           label="Min profit"
-          name="min"
+          name="minProfit"
           type="number"
           placeholder="Enter min profit"
           min={0}
           max={999999999999999}
+          value={filter.minProfit}
+          onChange={handleChangeMinProfit}
         />
         <FInput
           className="col-md-2"
           label="Min % profit"
-          name="minProfit"
+          name="minProfitPercent"
           placeholder="Enter min %"
+          value={filter.minProfitPercent}
+          onChange={handleChangeMinProfitPercent}
         />
       </Row>
       <div className="my-3 d-flex gap-4">
