@@ -1,7 +1,10 @@
 import { ChangeEvent, useState } from "react";
 import { Button, Form, Row } from "react-bootstrap";
 
+import { useAppDispatch, useAppSelector } from "@/hooks/typedHooks";
 import { useGetInitDataQuery } from "@/services/lots";
+import { clearFilter, setFilter as actionSetFilter } from "@/store/feature/filters/filtersSlice";
+import { clearLots } from "@/store/feature/lots/lotsSlice";
 
 import RecycleIcon from "../svg-icons/recycle-icon";
 import Trash3Icon from "../svg-icons/trash3-icon";
@@ -9,18 +12,12 @@ import FInput from "./f-input";
 import FSelect from "./f-select";
 import { getFilterSelectItems } from "./utils";
 
-const initialFilter = {
-  name: '',
-  rarity: '',
-  pattern: '',
-  minProfit: '',
-  minProfitPercent: '',
-};
-
 const MIN_PROFIT = 0;
 const MAX_PROFIT = 999_999_999;
 
 const Filter = () => {
+  const dispatch = useAppDispatch();
+  const { filter: initialFilter } = useAppSelector(state => state.filter);
   const { data } = useGetInitDataQuery();
   const [filter, setFilter] = useState(initialFilter);
 
@@ -129,11 +126,17 @@ const Filter = () => {
       <div className="col-md-5 d-flex gap-2 align-items-end my-3">
         <Button
           variant="success"
+          onClick={() => {
+            dispatch(actionSetFilter(filter));
+          }}
         >
           Enter filters
         </Button>
         <Button
           variant="outline-danger"
+          onClick={() => {
+            dispatch(clearFilter());
+          }}
         >
           <RecycleIcon />
           {' '}
@@ -141,6 +144,9 @@ const Filter = () => {
         </Button>
         <Button
           variant="outline-danger"
+          onClick={() => {
+            dispatch(clearLots());
+          }}
         >
           <Trash3Icon />
           {' '}

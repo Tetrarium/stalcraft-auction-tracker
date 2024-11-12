@@ -1,11 +1,14 @@
-import lotsReducer from "@/feature/lots/lotsSlice";
 import { auctionApi } from "@/services/lots";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
+import filterReducer from "./feature/filters/filtersSlice";
+import lotsReducer from "./feature/lots/lotsSlice";
+
 export const store = configureStore({
   reducer: {
     lots: lotsReducer,
+    filter: filterReducer,
     [auctionApi.reducerPath]: auctionApi.reducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(auctionApi.middleware)
@@ -13,5 +16,6 @@ export const store = configureStore({
 
 setupListeners(store.dispatch);
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type AppStore = typeof store;
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];

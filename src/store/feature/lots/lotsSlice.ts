@@ -32,5 +32,5 @@ export const lotsSlice = createSlice({
   }
 });
 
-export const { addLot } = lotsSlice.actions;
+export const { addLot, clearLots } = lotsSlice.actions;
 export default lotsSlice.reducer;

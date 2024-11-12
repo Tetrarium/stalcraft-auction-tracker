@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 
-import { addLot } from "@/feature/lots/lotsSlice";
 import { useGetLotsQuery } from "@/services/lots";
+import { addLot } from "@/store/feature/lots/lotsSlice";
+
+import { useAppDispatch } from "./typedHooks";
 
 export default function useRefreshLots() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { data } = useGetLotsQuery(null, {
     pollingInterval: 10000,
   });

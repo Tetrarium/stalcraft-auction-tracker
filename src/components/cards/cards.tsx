@@ -1,10 +1,9 @@
 import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
 import { Container } from "react-bootstrap";
-import { useSelector } from "react-redux";
 
+import { useAppSelector } from "@/hooks/typedHooks";
 import useRefreshLots from "@/hooks/useRefreshLots";
-import { RootState } from "@/store/store";
 
 import Card from "./card/card";
 import s from "./cards.module.sass";
@@ -21,7 +20,7 @@ const innerClass = classNames(
 
 const Cards = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { lots } = useSelector((state: RootState) => state.lots);
+  const { lots } = useAppSelector((state) => state.lots);
   const [scrollFromRigth, setScrollFromRigth] = useState<number | null>(null);
   useRefreshLots();
 
