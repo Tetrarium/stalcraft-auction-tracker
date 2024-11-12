@@ -64,7 +64,7 @@ const Cards = () => {
         ref={containerRef}
         className={innerClass}
       >
-        {lots.map((lot, i) => <Card key={lot.uniqueId} lot={lot} index={i} />
+        {lots.map((lot) => <Card key={lot.uniqueId} lot={lot} />
         )}
       </div>
     </Container >

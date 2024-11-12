@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { FC, useEffect, useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
 
 import ClockIcon from "@/components/svg-icons/clock-icon";
 import { ICard } from "@/types/card";
@@ -9,16 +9,15 @@ import { capitalize, formatPrice, getRarity } from "./utils";
 
 interface CardProps {
   lot: ICard;
-  index: number;
 }
 
-const Card: FC<CardProps> = ({ lot, index }) => {
-  const [isNew, setIsNew] = useState(index === 0);
+const Card: FC<CardProps> = memo(({ lot }) => {
+  const [isNew, setIsNew] = useState(true);
 
   useEffect(() => {
     let timerId: number;
     if (isNew) {
-      timerId = setInterval(() => setIsNew(false), 10);
+      timerId = setInterval(() => setIsNew(false), 20);
     }
 
     return () => {
@@ -143,6 +142,6 @@ const Card: FC<CardProps> = ({ lot, index }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Card;
