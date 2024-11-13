@@ -5,8 +5,8 @@ import { useGetInitDataQuery } from "@/API/auctionApi";
 import { useAppDispatch, useAppSelector } from "@/hooks/typedHooks";
 import {
     clearFilter, initialFilter, setFilter as actionSetFilter
-} from "@/store/feature/filters/filtersSlice";
-import { clearLots } from "@/store/feature/lots/lotsSlice";
+} from "@/store/feature/filtersSlice";
+import { clearLots } from "@/store/feature/lotsSlice";
 
 import RecycleIcon from "../svg-icons/recycle-icon";
 import Trash3Icon from "../svg-icons/trash3-icon";
@@ -23,7 +23,7 @@ const Filter = () => {
   const { data } = useGetInitDataQuery();
   const [filter, setFilter] = useState(curentFilter);
 
-  const { names, rarities, patterns } = getFilterSelectItems(data);
+  const { itemsIds, qualities, patterns } = getFilterSelectItems(data);
 
   const handleChange = (name: string, value: string) => {
     setFilter({
@@ -63,12 +63,12 @@ const Filter = () => {
         <FSelect
           className="col-md-3"
           label="Artifact name"
-          name="name"
+          name="itemId"
           values={[
             { title: 'All', value: '' },
-            ...names,
+            ...itemsIds,
           ]}
-          value={filter.name}
+          value={filter.itemId}
           onChange={handleChange}
         />
         <FSelect
@@ -77,20 +77,20 @@ const Filter = () => {
           name="rarity"
           values={[
             { title: 'All', value: '' },
-            ...rarities,
+            ...qualities,
           ]}
-          value={filter.rarity}
+          value={filter.qlt}
           onChange={handleChange}
         />
         <FSelect
           className="col-md-2"
           label="Pattern"
-          name="pattern"
+          name="ptn"
           values={[
             { title: 'All', value: '' },
             ...patterns,
           ]}
-          value={filter.pattern}
+          value={filter.ptn}
           onChange={handleChange}
         />
         <FInput
@@ -107,9 +107,9 @@ const Filter = () => {
         <FInput
           className="col-md-2"
           label="Min % profit"
-          name="minProfitPercent"
+          name="profitPercent"
           placeholder="Enter min %"
-          value={filter.minProfitPercent}
+          value={filter.profitPercent}
           onChange={handleChangeMinProfitPercent}
         />
       </Row>

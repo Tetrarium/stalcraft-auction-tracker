@@ -7,18 +7,25 @@ enum ArtifactRarity {
   Legendary = 'Legendary',
 }
 
+type ArtifactName = string;
+type ArtifactId = string;
+
+type ArtifactRarityValue = string;
+
+type ArtifactPatternValue = number;
+
 interface ArtifactNames {
-  list: string[];
-  map: Record<string, string>;
+  list: ArtifactName[];
+  map: Record<ArtifactId, ArtifactName>;
 }
 
 interface ArtifactRarityMap {
   list: ArtifactRarity[];
-  map: Record<string, ArtifactRarity>;
+  map: Record<ArtifactRarityValue, ArtifactRarity>;
 }
 
 interface AtrifactPattern {
-  list: number[];
+  list: ArtifactPatternValue[];
 }
 
 export interface IInitData {

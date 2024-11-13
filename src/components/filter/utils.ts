@@ -6,26 +6,28 @@ interface IFilterItem {
 }
 
 export function getFilterSelectItems(data?: IInitData): {
-  names: IFilterItem[];
-  rarities: IFilterItem[];
+  itemsIds: IFilterItem[];
+  qualities: IFilterItem[];
   patterns: IFilterItem[];
 } {
   if (!data) {
     return {
-      names: [],
-      rarities: [],
+      itemsIds: [],
+      qualities: [],
       patterns: [],
     };
   }
 
-  const names: IFilterItem[] = data.artifactNames
-    .list
-    .map((name, i) => ({
-      title: name,
-      value: i.toString(),
-    }));
+  const itemsIds: IFilterItem[] = [];
+  const artifactNames = data.artifactNames.map;
+  for (const [value, title] of Object.entries(artifactNames)) {
+    itemsIds.push({
+      title,
+      value,
+    });
+  }
 
-  const rarities: IFilterItem[] = data.artifactRarity
+  const qualities: IFilterItem[] = data.artifactRarity
     .list
     .map((name, i) => ({
       title: name,
@@ -40,8 +42,8 @@ export function getFilterSelectItems(data?: IInitData): {
     }));
 
   return {
-    names,
-    rarities,
+    itemsIds,
+    qualities,
     patterns,
   };
 }

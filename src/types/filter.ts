@@ -1,7 +1,7 @@
 export interface IFilter {
-  name: string;
-  rarity: string;
-  pattern: string;
+  itemId: string;
+  qlt: string;
+  ptn: string;
   minProfit: string;
-  minProfitPercent: string;
+  profitPercent: string;
 }

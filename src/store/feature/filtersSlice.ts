@@ -1,12 +1,12 @@
 import { IFilter } from "@/types/filter";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export const initialFilter = {
-  name: '',
-  rarity: '',
-  pattern: '',
+export const initialFilter: IFilter = {
+  itemId: '',
+  qlt: '',
+  ptn: '',
   minProfit: '',
-  minProfitPercent: '',
+  profitPercent: '',
 };
 
 interface FilterState {

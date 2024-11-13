@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import { useGetLotsQuery } from "@/API/auctionApi";
-import { addLot } from "@/store/feature/lots/lotsSlice";
+import { addLot } from "@/store/feature/lotsSlice";
 
 import { useAppDispatch, useAppSelector } from "./typedHooks";
 

@@ -2,8 +2,8 @@ import { auctionApi } from "@/API/auctionApi";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
-import filterReducer from "./feature/filters/filtersSlice";
-import lotsReducer from "./feature/lots/lotsSlice";
+import filterReducer from "./feature/filtersSlice";
+import lotsReducer from "./feature/lotsSlice";
 
 export const store = configureStore({
   reducer: {
