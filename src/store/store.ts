@@ -1,4 +1,4 @@
-import { auctionApi } from "@/services/lots";
+import { auctionApi } from "@/API/auctionApi";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 

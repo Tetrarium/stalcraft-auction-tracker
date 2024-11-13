@@ -1,13 +1,16 @@
 import { useEffect } from "react";
 
-import { useGetLotsQuery } from "@/services/lots";
+import { useGetLotsQuery } from "@/API/auctionApi";
 import { addLot } from "@/store/feature/lots/lotsSlice";
 
-import { useAppDispatch } from "./typedHooks";
+import { useAppDispatch, useAppSelector } from "./typedHooks";
 
 export default function useRefreshLots() {
   const dispatch = useAppDispatch();
-  const { data } = useGetLotsQuery(null, {
+
+  const { filter } = useAppSelector(state => state.filter);
+
+  const { data } = useGetLotsQuery(filter, {
     pollingInterval: 10000,
   });
 

@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from "react";
 import { Button, Form, Row } from "react-bootstrap";
 
+import { useGetInitDataQuery } from "@/API/auctionApi";
 import { useAppDispatch, useAppSelector } from "@/hooks/typedHooks";
-import { useGetInitDataQuery } from "@/services/lots";
 import { clearFilter, setFilter as actionSetFilter } from "@/store/feature/filters/filtersSlice";
 import { clearLots } from "@/store/feature/lots/lotsSlice";
 
