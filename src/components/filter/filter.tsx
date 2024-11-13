@@ -60,7 +60,7 @@ const Filter = () => {
       return;
     }
 
-    const value = Math.min(Math.max(parseInt(rawValue), 0), 10_000_000);
+    const value = Math.min(Math.max(parseInt(rawValue), 0), 100);
 
     handleChange(FIELD_NAMES.profitPercent, value + '%');
   };

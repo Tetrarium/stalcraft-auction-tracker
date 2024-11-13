@@ -1,3 +1,4 @@
+import { SERVER_URL } from "@/settings";
 import { ICard } from "@/types/card";
 import { IFilter } from "@/types/filter";
 import { IInitData } from "@/types/initData";
@@ -6,7 +7,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const auctionApi = createApi({
   reducerPath: 'auctionApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://213.150.86.6:8086/api/',
+    baseUrl: `${SERVER_URL}/api/`,
   }),
   endpoints: (builder) => ({
     getLots: builder.query<ICard[], IFilter>({
