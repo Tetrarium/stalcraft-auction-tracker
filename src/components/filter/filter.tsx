@@ -7,6 +7,7 @@ import {
   clearFilter, initialFilter, setFilter as actionSetFilter
 } from "@/store/feature/filtersSlice";
 import { clearLots } from "@/store/feature/lotsSlice";
+import { setLotNotification } from "@/store/feature/settingsSlice";
 
 import RecycleIcon from "../svg-icons/recycle-icon";
 import Trash3Icon from "../svg-icons/trash3-icon";
@@ -126,6 +127,11 @@ const Filter = () => {
           type="switch"
           label="Sound notification"
           name="sound-switch"
+          onChange={(e) => {
+            dispatch(
+              setLotNotification(e.target.checked),
+            );
+          }}
         />
         <Form.Check
           type="switch"
