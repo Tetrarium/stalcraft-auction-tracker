@@ -39,7 +39,7 @@ const FInput: FC<FInputProps> = ({
     );
 
     field.setSelectionRange(cursorPosition, cursorPosition);
-  }, [value]);
+  });
 
   return (
     <Form.Group className={className}>

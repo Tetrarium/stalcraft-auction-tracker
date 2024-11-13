@@ -4,7 +4,7 @@ import { Button, Form, Row } from "react-bootstrap";
 import { useGetInitDataQuery } from "@/API/auctionApi";
 import { useAppDispatch, useAppSelector } from "@/hooks/typedHooks";
 import {
-    clearFilter, initialFilter, setFilter as actionSetFilter
+  clearFilter, initialFilter, setFilter as actionSetFilter
 } from "@/store/feature/filtersSlice";
 import { clearLots } from "@/store/feature/lotsSlice";
 
@@ -16,6 +16,14 @@ import { getFilterSelectItems } from "./utils";
 
 const MIN_PROFIT = 0;
 const MAX_PROFIT = 999_999_999;
+
+enum FIELD_NAMES {
+  'itemId' = 'itemId',
+  'qlt' = 'qlt',
+  'ptn' = 'ptn',
+  'minProfit' = 'minProfit',
+  'profitPercent' = 'profitPercent',
+}
 
 const Filter = () => {
   const dispatch = useAppDispatch();
@@ -34,27 +42,28 @@ const Filter = () => {
 
   const handleChangeMinProfit = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === '') {
-      handleChange('minProfit', '');
+      handleChange(FIELD_NAMES.minProfit, '');
       return;
     }
 
     const value = Math.min(Math.max(MIN_PROFIT, +e.target.value), MAX_PROFIT);
 
-    handleChange('minProfit', value.toString());
+    handleChange(FIELD_NAMES.minProfit, value.toString());
   };
 
   const handleChangeMinProfitPercent = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     const rawValue = target.value.replace(/[^\d]/g, '');
+    console.log(rawValue);
 
     if (rawValue === '') {
-      handleChange('minProfitPercent', '');
+      handleChange(FIELD_NAMES.profitPercent, '');
       return;
     }
 
     const value = Math.min(Math.max(parseInt(rawValue), 0), 10_000_000);
 
-    handleChange('minProfitPercent', value + '%');
+    handleChange(FIELD_NAMES.profitPercent, value + '%');
   };
 
   return (
@@ -63,53 +72,53 @@ const Filter = () => {
         <FSelect
           className="col-md-3"
           label="Artifact name"
-          name="itemId"
+          name={FIELD_NAMES.itemId}
           values={[
             { title: 'All', value: '' },
             ...itemsIds,
           ]}
-          value={filter.itemId}
+          value={filter[FIELD_NAMES.itemId]}
           onChange={handleChange}
         />
         <FSelect
           className="col-md-3"
           label="Rarity"
-          name="rarity"
+          name={FIELD_NAMES.qlt}
           values={[
             { title: 'All', value: '' },
             ...qualities,
           ]}
-          value={filter.qlt}
+          value={filter[FIELD_NAMES.qlt]}
           onChange={handleChange}
         />
         <FSelect
           className="col-md-2"
           label="Pattern"
-          name="ptn"
+          name={FIELD_NAMES.ptn}
           values={[
             { title: 'All', value: '' },
             ...patterns,
           ]}
-          value={filter.ptn}
+          value={filter[FIELD_NAMES.ptn]}
           onChange={handleChange}
         />
         <FInput
           className="col-md-2"
           label="Min profit"
-          name="minProfit"
+          name={FIELD_NAMES.minProfit}
           type="number"
           placeholder="Enter min profit"
           min={0}
           max={999999999999999}
-          value={filter.minProfit}
+          value={filter[FIELD_NAMES.minProfit]}
           onChange={handleChangeMinProfit}
         />
         <FInput
           className="col-md-2"
           label="Min % profit"
-          name="profitPercent"
+          name={FIELD_NAMES.profitPercent}
           placeholder="Enter min %"
-          value={filter.profitPercent}
+          value={filter[FIELD_NAMES.profitPercent]}
           onChange={handleChangeMinProfitPercent}
         />
       </Row>
