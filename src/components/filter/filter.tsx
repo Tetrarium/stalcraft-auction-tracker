@@ -3,7 +3,9 @@ import { Button, Form, Row } from "react-bootstrap";
 
 import { useGetInitDataQuery } from "@/API/auctionApi";
 import { useAppDispatch, useAppSelector } from "@/hooks/typedHooks";
-import { clearFilter, setFilter as actionSetFilter } from "@/store/feature/filters/filtersSlice";
+import {
+    clearFilter, initialFilter, setFilter as actionSetFilter
+} from "@/store/feature/filters/filtersSlice";
 import { clearLots } from "@/store/feature/lots/lotsSlice";
 
 import RecycleIcon from "../svg-icons/recycle-icon";
@@ -17,9 +19,9 @@ const MAX_PROFIT = 999_999_999;
 
 const Filter = () => {
   const dispatch = useAppDispatch();
-  const { filter: initialFilter } = useAppSelector(state => state.filter);
+  const { filter: curentFilter } = useAppSelector(state => state.filter);
   const { data } = useGetInitDataQuery();
-  const [filter, setFilter] = useState(initialFilter);
+  const [filter, setFilter] = useState(curentFilter);
 
   const { names, rarities, patterns } = getFilterSelectItems(data);
 
@@ -136,6 +138,7 @@ const Filter = () => {
           variant="outline-danger"
           onClick={() => {
             dispatch(clearFilter());
+            setFilter(initialFilter);
           }}
         >
           <RecycleIcon />
