@@ -35,6 +35,12 @@ const getSerializedFilterParams = (filter: IFilter) => {
   for (const [key, value] of Object.entries(filter)) {
     if (value === '') continue;
 
+    if (key === 'profitPercent') {
+      // Костыль. Нужно будет устранить, перед этим пофиксив profitPercent в filter
+      const val = parseInt(value).toString();
+      params.append(key, val);
+      continue;
+    }
     params.append(key, value);
   }
 

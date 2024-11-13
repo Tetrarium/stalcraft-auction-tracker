@@ -54,7 +54,6 @@ const Filter = () => {
   const handleChangeMinProfitPercent = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     const rawValue = target.value.replace(/[^\d]/g, '');
-    console.log(rawValue);
 
     if (rawValue === '') {
       handleChange(FIELD_NAMES.profitPercent, '');
