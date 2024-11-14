@@ -5,6 +5,7 @@ import ClockIcon from "@/components/svg-icons/clock-icon";
 import { ICard } from "@/types/card";
 
 import s from "./card.module.sass";
+import HistoryModal from "./historyModal";
 import { capitalize, formatPrice, getRarity } from "./utils";
 
 interface CardProps {
@@ -13,6 +14,7 @@ interface CardProps {
 
 const Card: FC<CardProps> = memo(({ lot }) => {
   const [isNew, setIsNew] = useState(true);
+  const [isOpenHistoryModal, setIsOpenHistoryModal] = useState(false);
 
   useEffect(() => {
     let timerId: number;
@@ -130,6 +132,7 @@ const Card: FC<CardProps> = memo(({ lot }) => {
               <button
                 className={s.historyBtn}
                 data-unique-id={uniqueId}
+                onClick={() => setIsOpenHistoryModal(true)}
               >
                 Profit
                 {' '}
@@ -140,6 +143,13 @@ const Card: FC<CardProps> = memo(({ lot }) => {
           </div>
         </div>
       </div>
+      {
+        isOpenHistoryModal &&
+        <HistoryModal
+          onClose={() => setIsOpenHistoryModal(false)}
+          uniqueId={uniqueId}
+        />
+      }
     </div>
   );
 });

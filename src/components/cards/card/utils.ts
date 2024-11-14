@@ -23,7 +23,7 @@ export function getRarity(qlt?: number): IRarity {
     },
     {
       percentQlt: '120-130%',
-      rarity: 'Rare',
+      rarity: 'rare',
     },
     {
       percentQlt: '130-140%',

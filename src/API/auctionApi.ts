@@ -1,6 +1,7 @@
 import { SERVER_URL } from "@/settings";
 import { ICard } from "@/types/card";
 import { IFilter } from "@/types/filter";
+import { IHistoryItem } from "@/types/historyItem";
 import { IInitData } from "@/types/initData";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -21,13 +22,19 @@ export const auctionApi = createApi({
     }),
     getInitData: builder.query<IInitData, void>({
       query: () => 'init'
-    })
+    }),
+    getHistory: builder.query<IHistoryItem[], number>({
+      query: (uniqueId) => {
+        return `history?uniqueId=${uniqueId}`;
+      }
+    }),
   })
 });
 
 export const {
   useGetLotsQuery,
-  useGetInitDataQuery
+  useGetInitDataQuery,
+  useGetHistoryQuery,
 } = auctionApi;
 
 const getSerializedFilterParams = (filter: IFilter) => {
