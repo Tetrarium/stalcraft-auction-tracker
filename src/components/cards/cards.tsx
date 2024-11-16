@@ -2,11 +2,12 @@ import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
 import { Container } from "react-bootstrap";
 
+// import { VariableSizeList } from "react-window";
 import { useAppSelector } from "@/hooks/typedHooks";
-import useRefreshLots from "@/hooks/useRefreshLots";
 
 import Card from "./card/card";
 import s from "./cards.module.sass";
+import PollingLots from "./pollingLots";
 
 const containerClass = classNames(
   "py-1 px-4 mb-5",
@@ -22,7 +23,6 @@ const Cards = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { lots } = useAppSelector((state) => state.lots);
   const [scrollFromRigth, setScrollFromRigth] = useState<number | null>(null);
-  useRefreshLots();
 
   useEffect(() => {
     const scrollContainer = containerRef.current;
@@ -66,7 +66,29 @@ const Cards = () => {
       >
         {lots.map((lot) => <Card key={lot.uniqueId} lot={lot} />
         )}
+
+
+        {/* <VariableSizeList
+          className={innerClass}
+          direction="horizontal"
+          width={800}
+          height={"100%"}
+          itemCount={lots.length}
+          itemSize={() => 400}
+          itemData={lots}
+          overscanCount={5}
+        >
+          {({ data, index, style }) => (
+            <div
+              ref={containerRef}
+              style={style}
+            >
+              <Card lot={data[index]} key={data[index].uniqueId} />
+            </div>
+          )}
+        </VariableSizeList> */}
       </div>
+      <PollingLots />
     </Container >
   );
 };
