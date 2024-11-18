@@ -49,6 +49,20 @@ const Cards = () => {
     }
   }, []);
 
+  const handleScroll = () => {
+    if (containerRef.current) {
+      const scrollContainer = containerRef.current;
+
+      const scrollWidth = scrollContainer.scrollWidth;
+
+      if (scrollContainer.scrollLeft === 0) {
+        setScrollFromRigth(null);
+      } else {
+        setScrollFromRigth(scrollWidth - scrollContainer.scrollLeft);
+      }
+    }
+  };
+
   useEffect(() => {
     const scrollContainer = containerRef.current;
     if (scrollContainer && scrollFromRigth) {
@@ -63,6 +77,7 @@ const Cards = () => {
       <div
         ref={containerRef}
         className={innerClass}
+        onScroll={handleScroll}
       >
         {lots.map((lot) => <Card key={lot.uniqueId} lot={lot} />
         )}
