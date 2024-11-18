@@ -1,95 +1,73 @@
 import classNames from "classnames";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Container } from "react-bootstrap";
+import { VariableSizeList } from "react-window";
 
-// import { VariableSizeList } from "react-window";
 import { useAppSelector } from "@/hooks/typedHooks";
 
 import Card from "./card/card";
 import s from "./cards.module.sass";
 import PollingLots from "./pollingLots";
 
-const containerClass = classNames(
-  "py-1 px-4 mb-5",
-  s.cards
-);
-
-const innerClass = classNames(
-  "d-flex flex-row",
-  s.inner
-);
-
 const Cards = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<VariableSizeList>(null);
   const { lots } = useAppSelector((state) => state.lots);
-  const [scrollFromRigth, setScrollFromRigth] = useState<number | null>(null);
+  const memoizedLots = useMemo(() => lots, [lots]);
+  const [containerWidth, setContainerWidth] = useState<number>(0);
 
-  useEffect(() => {
-    const scrollContainer = containerRef.current;
-    if (scrollContainer) {
-      const handleWheel = (event: WheelEvent) => {
-        event.preventDefault();
+  const handleWheel = useCallback((e: WheelEvent) => {
+    e.preventDefault();
+    if (listRef.current) {
+      const scrollOffset = (listRef.current.state as { scrollOffset: number; }).scrollOffset;
+      listRef.current.scrollTo(scrollOffset + e.deltaY);
+    }
+  }, []);
 
-        scrollContainer.scrollLeft += event.deltaY;
-
-        const scrollWidth = scrollContainer.scrollWidth;
-
-        if (scrollContainer.scrollLeft === 0) {
-          setScrollFromRigth(null);
-        } else {
-          setScrollFromRigth(scrollWidth - scrollContainer.scrollLeft);
-        }
-      };
-
-      scrollContainer.addEventListener('wheel', handleWheel, { passive: false });
-
-      return () => {
-        scrollContainer.removeEventListener('wheel', handleWheel);
-      };
+  const updateWidth = useCallback(() => {
+    if (containerRef.current) {
+      setContainerWidth(containerRef.current.offsetWidth);
     }
   }, []);
 
   useEffect(() => {
-    const scrollContainer = containerRef.current;
-    if (scrollContainer && scrollFromRigth) {
-      scrollContainer.scrollLeft = scrollContainer.scrollWidth - scrollFromRigth;
+    if (containerRef.current) {
+      containerRef.current.addEventListener('wheel', handleWheel, { passive: false });
     }
-  }, [lots, scrollFromRigth]);
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+
+    return () => {
+      containerRef.current?.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('resize', updateWidth);
+    };
+  });
+
+  const widths = lots.map(() => Math.random() * (25 * 16 - 20 * 16) + 20 * 16); // Ширина от 20rem до 25rem
+
+  const getItemSize = useCallback((index: number) => widths[index], [widths]);
 
   return (
-    <Container
-      className={containerClass}
-    >
-      <div
-        ref={containerRef}
-        className={innerClass}
+    <Container ref={containerRef} className={classNames("py-1 px-4 mb-5", s.cards)}>
+      <VariableSizeList
+        ref={listRef}
+        className={s.inner}
+        direction="horizontal"
+        width={containerWidth}
+        height={710} // Высота списка
+        itemCount={memoizedLots.length}
+        itemSize={getItemSize}
+        itemData={memoizedLots}
+        overscanCount={5}
       >
-        {lots.map((lot) => <Card key={lot.uniqueId} lot={lot} />
+        {({ data, index, style }) => (
+          <div style={style} key={data[index].uniqueId}>
+            <Card lot={data[index]} key={data[index].uniqueId} />
+          </div>
         )}
-
-
-        {/* <VariableSizeList
-          className={innerClass}
-          direction="horizontal"
-          width={800}
-          height={"100%"}
-          itemCount={lots.length}
-          itemSize={() => 400}
-          itemData={lots}
-          overscanCount={5}
-        >
-          {({ data, index, style }) => (
-            <div
-              ref={containerRef}
-              style={style}
-            >
-              <Card lot={data[index]} key={data[index].uniqueId} />
-            </div>
-          )}
-        </VariableSizeList> */}
-      </div>
+      </VariableSizeList>
       <PollingLots />
-    </Container >
+    </Container>
   );
 };
 
