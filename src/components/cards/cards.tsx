@@ -54,7 +54,7 @@ const Cards = () => {
     if (scrollContainer && scrollFromRigth) {
       scrollContainer.scrollLeft = scrollContainer.scrollWidth - scrollFromRigth;
     }
-  }, [lots]);
+  }, [lots, scrollFromRigth]);
 
   return (
     <Container

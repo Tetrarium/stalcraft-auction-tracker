@@ -7,7 +7,7 @@ import DefaultModal, { DefaultModalProps } from "@/UI/modal/defaultModal";
 
 import s from "./historyModal.module.sass";
 import sMods from "./modificators.module.sass";
-import { getRarity } from "./utils";
+import { formatDateTime, formatPrice, getRarity } from "./utils";
 
 interface HistoryModalProps {
   uniqueId: number;
@@ -85,16 +85,18 @@ const HistoryList: FC<{ data: IHistoryItem[]; }> = ({ data }) => {
           }
         </span>
       </h3>
-      <ul className={s.bonuses}>
-        {firstItem.bonuses.map(bonus =>
-          <li key={bonus} className={s.bonus}>{bonus}</li>
-        )}
-      </ul>
+      {firstItem.bonuses.length > 0 &&
+        <ul className={s.bonuses}>
+          {firstItem.bonuses.map(bonus =>
+            <li key={bonus} className={s.bonus}>{bonus}</li>
+          )}
+        </ul>
+      }
       <ul className={s.rates}>
         {data.map(rate =>
           <li className={s.rate}>
-            <span>{rate.time}</span>
-            <span>{rate.price} RUR</span>
+            <span>{formatDateTime(rate.time)}</span>
+            <span>{formatPrice(rate.price)} RUR</span>
           </li>
         )}
       </ul>

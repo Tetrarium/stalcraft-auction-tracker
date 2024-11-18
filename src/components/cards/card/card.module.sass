@@ -8,15 +8,10 @@
   min-height: 35rem
   flex: 0 0 auto
   overflow: hidden
-  transition: opacity .4s linear
+  animation: showCard .9s ease-in
 
   &__item
     padding: 0 1em
-
-  &_new
-    opacity: 0
-  &_amature
-    opacity: 1
 
 .header
   display: flex
@@ -102,3 +97,9 @@
   transition: color .2s linear
   &:hover
     color: white
+
+@keyframes showCard
+  0%
+    opacity: 0
+  100%
+    opacity: 1

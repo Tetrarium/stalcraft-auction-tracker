@@ -15,6 +15,15 @@
   padding: 30px
   border-radius: 8px
   width: 40%
+  min-width: 450px
   max-height: 80%
-  overflow-y: hidden
-  // position: relative
+  display: flex
+  animation: modalAnimation 0.5s ease-out
+
+@keyframes modalAnimation
+  from
+    transform: scale(0.5)
+    opacity: 0
+  to
+    transform: scale(1)
+    opacity: 1

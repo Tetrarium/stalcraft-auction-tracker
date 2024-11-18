@@ -35,5 +35,5 @@ export default function useRefreshLots() {
         }
       })();
     }
-  }, [data]);
+  }, [data, dispatch, lotNotification]);
 }

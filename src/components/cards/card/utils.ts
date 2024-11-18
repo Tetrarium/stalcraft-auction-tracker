@@ -45,3 +45,7 @@ export function capitalize(str: string) {
 export function formatPrice(value: number) {
   return new Intl.NumberFormat('ru-RU').format(value);
 }
+
+export function formatDateTime(dateTime: string) {
+  return new Date(dateTime).toLocaleString();
+}

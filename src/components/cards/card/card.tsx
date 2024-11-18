@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { FC, memo, useEffect, useState } from "react";
+import { FC, memo, useState } from "react";
 
 import ClockIcon from "@/components/svg-icons/clock-icon";
 import { ICard } from "@/types/card";
@@ -13,19 +13,7 @@ interface CardProps {
 }
 
 const Card: FC<CardProps> = memo(({ lot }) => {
-  const [isNew, setIsNew] = useState(true);
   const [isOpenHistoryModal, setIsOpenHistoryModal] = useState(false);
-
-  useEffect(() => {
-    let timerId: number;
-    if (isNew) {
-      timerId = setInterval(() => setIsNew(false), 20);
-    }
-
-    return () => {
-      clearInterval(timerId);
-    };
-  }, []);
 
   const {
     uniqueId,
@@ -48,10 +36,6 @@ const Card: FC<CardProps> = memo(({ lot }) => {
   const cardClass = classNames(
     'text-bg-dark ',
     s.card,
-    {
-      [s.card_new]: isNew,
-      [s.card_amature]: !isNew,
-    }
   );
 
   const titleClass = classNames(
