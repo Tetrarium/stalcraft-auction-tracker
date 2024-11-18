@@ -32,15 +32,16 @@ const Cards = () => {
 
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.addEventListener('wheel', handleWheel, { passive: false });
-    }
-    updateWidth();
-    window.addEventListener('resize', updateWidth);
+      const container = containerRef.current;
+      container.addEventListener('wheel', handleWheel, { passive: false });
+      updateWidth();
+      window.addEventListener('resize', updateWidth);
 
-    return () => {
-      containerRef.current?.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('resize', updateWidth);
-    };
+      return () => {
+        container.removeEventListener('wheel', handleWheel);
+        window.removeEventListener('resize', updateWidth);
+      };
+    }
   });
 
   const widths = lots.map(() => Math.random() * (25 * 16 - 20 * 16) + 20 * 16); // Ширина от 20rem до 25rem
