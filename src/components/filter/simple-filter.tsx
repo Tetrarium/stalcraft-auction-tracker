@@ -34,7 +34,7 @@ const SimpleFilter: FC<FilterProps> = ({ initData }) => {
       ...filter,
       [name]: value,
     });
-  }, []);
+  }, [filter]);
 
   const handleChangeMinProfit = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === '') {
@@ -45,7 +45,7 @@ const SimpleFilter: FC<FilterProps> = ({ initData }) => {
     const value = Math.min(Math.max(MIN_PROFIT, +e.target.value), MAX_PROFIT);
 
     handleChange(FIELD_NAMES.minProfit, value.toString());
-  }, []);
+  }, [handleChange]);
 
   const handleChangeMinProfitPercent = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
@@ -59,7 +59,7 @@ const SimpleFilter: FC<FilterProps> = ({ initData }) => {
     const value = Math.min(Math.max(parseInt(rawValue), 0), 100);
 
     handleChange(FIELD_NAMES.profitPercent, value + '%');
-  }, []);
+  }, [handleChange]);
 
   return (
     <Row>
