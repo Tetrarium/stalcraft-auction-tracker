@@ -2,7 +2,7 @@ import { Button, Container, Form, Row } from "react-bootstrap";
 
 import Trash3Icon from "@/components/svg-icons/trash3-icon";
 import FSelect from "@/UI/inputs/f-select";
-import Range from "@/UI/range/range";
+import LabeledRange from "@/UI/range/labeled-range/labeled-range";
 
 import s from "./advanced-filter.module.sass";
 
@@ -23,7 +23,7 @@ const AdvancedFilter = () => {
             ]}
             onChange={() => { }}
           />
-          <Range
+          <LabeledRange
             className="col-md-5"
             label="Rarity"
             name="rarity"
