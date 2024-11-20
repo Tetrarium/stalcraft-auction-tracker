@@ -1,29 +1,36 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
-import { useGetInitDataQuery } from "@/API/auctionApi";
 import { useAppDispatch, useAppSelector } from "@/hooks/typedHooks";
 import {
-    clearFilter, initialFilter, setFilter as actionSetFilter
+  clearFilter, initialFilter, setFilter as actionSetFilter
 } from "@/store/feature/filtersSlice";
 import { clearLots } from "@/store/feature/lotsSlice";
 import { setLotNotification } from "@/store/feature/settingsSlice";
 
 import RecycleIcon from "../svg-icons/recycle-icon";
+import SettingsIcon from "../svg-icons/settings-icon";
 import Trash3Icon from "../svg-icons/trash3-icon";
+import AdvancedFilter from "./advanced-filter/advanced-filter";
 import SimpleFilter from "./simple-filter";
 
 const Filter = () => {
   const dispatch = useAppDispatch();
   const { lotNotification } = useAppSelector(state => state.appSettings);
   const { filter: curentFilter } = useAppSelector(state => state.filter);
-  const { data: filterParams } = useGetInitDataQuery();
   const [filter, setFilter] = useState(curentFilter);
   const [isAdvancedFilter, setIsAdvancedFilter] = useState(false);
 
+  const handleChange = useCallback((name: string, value: string) => {
+    setFilter({
+      ...filter,
+      [name]: value,
+    });
+  }, [filter]);
+
   return (
     <Form className="pt-4 pb-5">
-      {!isAdvancedFilter && <SimpleFilter initData={filterParams} />}
+      {!isAdvancedFilter && <SimpleFilter data={filter} onChange={handleChange} />}
       <div className="my-3 d-flex gap-4">
         <Form.Check
           type="switch"
@@ -52,25 +59,29 @@ const Filter = () => {
         />
       </div>
       <div className="col-md-5 d-flex gap-2 align-items-end my-3">
-        <Button
-          variant="success"
-          onClick={() => {
-            dispatch(actionSetFilter(filter));
-          }}
-        >
-          Enter filters
-        </Button>
-        <Button
-          variant="outline-danger"
-          onClick={() => {
-            dispatch(clearFilter());
-            setFilter(initialFilter);
-          }}
-        >
-          <RecycleIcon />
-          {' '}
-          Clear filters
-        </Button>
+        {!isAdvancedFilter &&
+          <>
+            <Button
+              variant="success"
+              onClick={() => {
+                dispatch(actionSetFilter(filter));
+              }}
+            >
+              Enter filters
+            </Button>
+            <Button
+              variant="outline-danger"
+              onClick={() => {
+                dispatch(clearFilter());
+                setFilter(initialFilter);
+              }}
+            >
+              <RecycleIcon />
+              {' '}
+              Clear filters
+            </Button>
+          </>
+        }
         <Button
           variant="outline-danger"
           onClick={() => {
@@ -81,7 +92,19 @@ const Filter = () => {
           {' '}
           Clear artifacts
         </Button>
+        {isAdvancedFilter &&
+          <Button
+            variant="outline-danger"
+          >
+            <SettingsIcon />
+            {' '}
+            Settings
+          </Button>
+        }
       </div>
+      {isAdvancedFilter &&
+        <AdvancedFilter />
+      }
     </Form>
   );
 };

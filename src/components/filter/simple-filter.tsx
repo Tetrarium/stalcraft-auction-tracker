@@ -1,8 +1,8 @@
-import { ChangeEvent, FC, useCallback, useState } from "react";
+import { ChangeEvent, FC, useCallback } from "react";
 import { Row } from "react-bootstrap";
 
-import { useAppSelector } from "@/hooks/typedHooks";
-import { IInitData } from "@/types/initData";
+import { useGetInitDataQuery } from "@/API/auctionApi";
+import { IFilter } from "@/types/filter";
 import FInput from "@/UI/inputs/f-input";
 import FSelect from "@/UI/inputs/f-select";
 
@@ -20,46 +20,40 @@ enum FIELD_NAMES {
 }
 
 interface FilterProps {
-  initData?: IInitData;
+  data: IFilter;
+  onChange: (name: string, value: string) => void;
 }
 
-const SimpleFilter: FC<FilterProps> = ({ initData }) => {
-  const { filter: curentFilter } = useAppSelector(state => state.filter);
-  const [filter, setFilter] = useState(curentFilter);
+const SimpleFilter: FC<FilterProps> = ({ data, onChange }) => {
+  const { data: filterParams } = useGetInitDataQuery();
+  const { itemsIds, qualities, patterns } = getFilterSelectItems(filterParams);
 
-  const { itemsIds, qualities, patterns } = getFilterSelectItems(initData);
 
-  const handleChange = useCallback((name: string, value: string) => {
-    setFilter({
-      ...filter,
-      [name]: value,
-    });
-  }, [filter]);
 
   const handleChangeMinProfit = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === '') {
-      handleChange(FIELD_NAMES.minProfit, '');
+      onChange(FIELD_NAMES.minProfit, '');
       return;
     }
 
     const value = Math.min(Math.max(MIN_PROFIT, +e.target.value), MAX_PROFIT);
 
-    handleChange(FIELD_NAMES.minProfit, value.toString());
-  }, [handleChange]);
+    onChange(FIELD_NAMES.minProfit, value.toString());
+  }, [onChange]);
 
   const handleChangeMinProfitPercent = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     const rawValue = target.value.replace(/[^\d]/g, '');
 
     if (rawValue === '') {
-      handleChange(FIELD_NAMES.profitPercent, '');
+      onChange(FIELD_NAMES.profitPercent, '');
       return;
     }
 
     const value = Math.min(Math.max(parseInt(rawValue), 0), 100);
 
-    handleChange(FIELD_NAMES.profitPercent, value + '%');
-  }, [handleChange]);
+    onChange(FIELD_NAMES.profitPercent, value + '%');
+  }, [onChange]);
 
   return (
     <Row>
@@ -71,8 +65,8 @@ const SimpleFilter: FC<FilterProps> = ({ initData }) => {
           { title: 'All', value: '' },
           ...itemsIds,
         ]}
-        value={filter[FIELD_NAMES.itemId]}
-        onChange={handleChange}
+        value={data[FIELD_NAMES.itemId]}
+        onChange={onChange}
       />
       <FSelect
         className="col-md-3"
@@ -82,8 +76,8 @@ const SimpleFilter: FC<FilterProps> = ({ initData }) => {
           { title: 'All', value: '' },
           ...qualities,
         ]}
-        value={filter[FIELD_NAMES.qlt]}
-        onChange={handleChange}
+        value={data[FIELD_NAMES.qlt]}
+        onChange={onChange}
       />
       <FSelect
         className="col-md-2"
@@ -93,8 +87,8 @@ const SimpleFilter: FC<FilterProps> = ({ initData }) => {
           { title: 'All', value: '' },
           ...patterns,
         ]}
-        value={filter[FIELD_NAMES.ptn]}
-        onChange={handleChange}
+        value={data[FIELD_NAMES.ptn]}
+        onChange={onChange}
       />
       <FInput
         className="col-md-2"
@@ -104,7 +98,7 @@ const SimpleFilter: FC<FilterProps> = ({ initData }) => {
         placeholder="Enter min profit"
         min={0}
         max={999999999999999}
-        value={filter[FIELD_NAMES.minProfit]}
+        value={data[FIELD_NAMES.minProfit]}
         onChange={handleChangeMinProfit}
       />
       <FInput
@@ -112,7 +106,7 @@ const SimpleFilter: FC<FilterProps> = ({ initData }) => {
         label="Min % profit"
         name={FIELD_NAMES.profitPercent}
         placeholder="Enter min %"
-        value={filter[FIELD_NAMES.profitPercent]}
+        value={data[FIELD_NAMES.profitPercent]}
         onChange={handleChangeMinProfitPercent}
       />
     </Row>

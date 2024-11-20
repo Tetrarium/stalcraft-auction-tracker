@@ -1,6 +1,7 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
-import paths from 'vite-tsconfig-paths';
+import { defineConfig } from "vite";
+import paths from "vite-tsconfig-paths";
+
+import react from "@vitejs/plugin-react-swc";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -22,4 +23,14 @@ export default defineConfig({
     react({ plugins: [] }),
     paths({ root: '../' }),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern',
+      },
+      sass: {
+        api: 'modern',
+      }
+    }
+  }
 });
