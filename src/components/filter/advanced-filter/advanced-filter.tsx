@@ -40,7 +40,7 @@ const AdvancedFilter = () => {
       <h2>Advanced settings</h2>
       <Form>
         <Row>
-          <Col xl={2}>
+          <Col xl={2} md={6} xs={12} >
             <FSelect
               label="Artifact name"
               name='artifact'
@@ -52,7 +52,8 @@ const AdvancedFilter = () => {
               onChange={() => { }}
             />
           </Col>
-          <Col xl={4}>
+          {/* <Col xl={0} md={6} xs={0} /> */}
+          <Col xl={4} md={6} xs={12}>
             <StepRangeSlider
               label="Rarity"
               name="rarity"
@@ -60,7 +61,7 @@ const AdvancedFilter = () => {
               points={rarities}
             />
           </Col>
-          <Col xl={3}>
+          <Col xl={3} md={6} xs={12}>
             <StepRangeSlider
               label="Pattern"
               name="pattern"
@@ -68,7 +69,7 @@ const AdvancedFilter = () => {
               points={patterns}
             />
           </Col>
-          <Col xl={3}>
+          <Col xl={3} md={6} xs={12}>
             <MinMaxRangeSlider
               label="Profit"
               name="profit"
@@ -77,7 +78,7 @@ const AdvancedFilter = () => {
               max={15000}
             />
           </Col>
-          <Col xl={3}>
+          <Col xl={3} md={6}>
             <MinMaxRangeSlider
               label="Profit %"
               name="profitPercent"
