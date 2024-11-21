@@ -26,11 +26,13 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        api: 'modern',
+        api: 'legacy',
+        quietDeps: true,
       },
       sass: {
         api: 'modern',
-      }
-    }
+        quietDeps: true,
+      },
+    },
   }
 });
