@@ -1,4 +1,4 @@
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Modal, Row } from "react-bootstrap";
 
 import Trash3Icon from "@/components/svg-icons/trash3-icon";
 import FSelect from "@/UI/inputs/f-select";
@@ -36,9 +36,9 @@ const patterns = [
 
 const AdvancedFilter = () => {
   return (
-    <Container className={s.container}>
-      <h2>Advanced settings</h2>
-      <Form>
+    <Modal.Dialog className={s.container} fullscreen>
+      <Modal.Header closeButton className={s.header}>Advanced settings</Modal.Header>
+      <Modal.Body className={s.body}>
         <Row>
           <Col xl={2} md={6} xs={12} >
             <FSelect
@@ -102,8 +102,8 @@ const AdvancedFilter = () => {
             Clear
           </Button>
         </div>
-      </Form>
-    </Container>
+      </Modal.Body>
+    </Modal.Dialog>
   );
 };
 

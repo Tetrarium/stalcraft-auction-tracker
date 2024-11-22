@@ -7,6 +7,7 @@ import {
 } from "@/store/feature/filtersSlice";
 import { clearLots } from "@/store/feature/lotsSlice";
 import { setLotNotification } from "@/store/feature/settingsSlice";
+import WideModal from "@/UI/modal/wideModal";
 
 import RecycleIcon from "../svg-icons/recycle-icon";
 import SettingsIcon from "../svg-icons/settings-icon";
@@ -20,6 +21,7 @@ const Filter = () => {
   const { filter: curentFilter } = useAppSelector(state => state.filter);
   const [filter, setFilter] = useState(curentFilter);
   const [isAdvancedFilter, setIsAdvancedFilter] = useState(false);
+  const [isOpenAdvancedModal, setIsOpenAdvancedModal] = useState(false);
 
   const handleChange = useCallback((name: string, value: string) => {
     setFilter({
@@ -96,6 +98,7 @@ const Filter = () => {
           {isAdvancedFilter &&
             <Button
               variant="outline-danger"
+              onClick={() => setIsOpenAdvancedModal(true)}
             >
               <SettingsIcon />
               {' '}
@@ -104,8 +107,13 @@ const Filter = () => {
           }
         </div>
       </Form>
-      {isAdvancedFilter &&
+      {/* {isAdvancedFilter &&
         <AdvancedFilter />
+      } */}
+      {isOpenAdvancedModal &&
+        <WideModal onHide={() => setIsOpenAdvancedModal(false)}>
+          <AdvancedFilter />
+        </WideModal>
       }
     </>
   );
