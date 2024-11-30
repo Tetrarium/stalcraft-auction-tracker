@@ -37,10 +37,10 @@ const patterns = [
 const AdvancedFilter = () => {
   return (
     <Modal.Dialog className={s.container} fullscreen>
-      <Modal.Header closeButton className={s.header}>Advanced settings</Modal.Header>
+      <Modal.Header closeButton className={s.header} closeVariant="white">Advanced settings</Modal.Header>
       <Modal.Body className={s.body}>
         <Row>
-          <Col xl={2} md={6} xs={12} >
+          <Col xl={2} md={12} xs={12} >
             <FSelect
               label="Artifact name"
               name='artifact'
@@ -52,8 +52,7 @@ const AdvancedFilter = () => {
               onChange={() => { }}
             />
           </Col>
-          {/* <Col xl={0} md={6} xs={0} /> */}
-          <Col xl={4} md={6} xs={12}>
+          <Col xl={3} md={6} xs={12}>
             <StepRangeSlider
               label="Rarity"
               name="rarity"
@@ -69,7 +68,7 @@ const AdvancedFilter = () => {
               points={patterns}
             />
           </Col>
-          <Col xl={3} md={6} xs={12}>
+          <Col xl={2} md={6} xs={12}>
             <MinMaxRangeSlider
               label="Profit"
               name="profit"
@@ -78,7 +77,7 @@ const AdvancedFilter = () => {
               max={15000}
             />
           </Col>
-          <Col xl={3} md={6}>
+          <Col xl={2} md={6}>
             <MinMaxRangeSlider
               label="Profit %"
               name="profitPercent"
@@ -88,7 +87,7 @@ const AdvancedFilter = () => {
             />
           </Col>
         </Row>
-        <div className="col-md-5 d-flex gap-2 align-items-end my-3">
+        <div className="d-flex gap-2 my-3">
           <Button
             variant="success"
           >

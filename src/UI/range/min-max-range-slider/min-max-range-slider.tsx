@@ -1,5 +1,5 @@
 import Slider from "rc-slider";
-import { ChangeEvent, FC, useCallback, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
 
 import s from "./style.module.sass";
@@ -22,14 +22,10 @@ const MinMaxRangeSlider: FC<SliderProps> = ({ label, values, min, max, className
     }
   }, []);
 
-  const handleChangeMin = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const value = parseInt(e.target.value);
-
+  const changeMin = (value: number) => {
     const maxV = range[1];
     const newV = Math.max(min, Math.min(value, maxV));
     setRange([newV, range[1]]);
-    console.log(range);
   };
 
   const changeMax = (value: number) => {
@@ -53,22 +49,22 @@ const MinMaxRangeSlider: FC<SliderProps> = ({ label, values, min, max, className
       </div>
       <div className={s.inputs}>
         <div>
-          <input
+          <Form.Control
             className={s.number}
             type="number"
-            value={range[0]}
+            value={range[0].toString()}
             min={min}
             max={range[1]}
-            onChange={handleChangeMin}
+            onChange={e => changeMin(+e.target.value)}
           />
           {' '}
           min
         </div>
         <div>
-          <input
+          <Form.Control
             className={s.number}
             type="number"
-            value={range[1]}
+            value={range[1].toString()}
             min={range[0]}
             max={max}
             onChange={e => changeMax(+e.target.value)}
